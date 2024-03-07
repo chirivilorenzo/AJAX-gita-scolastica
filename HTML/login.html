@@ -1,11 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $("document").ready(function(){
+                $("#login").click(function(){
+                    verificaUtente();
+                });
+            });
+
+
+            function verificaUtente(){
+                let user = $("#user").val();
+                let psw = $("#psw").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "../PHP/login.php",
+                    data: {username: user, password: psw},
+                    success: function(response){
+                        if(response == "200"){
+                            window.location.href="paginaUtenti.html";
+                        }
+                        else if(response == "admin"){
+                            window.location.href="paginaAdmin.html";
+                        }
+                        else{
+                            alert("errore nella login");
+                        }
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+        username: <input type="text" id="user"><br>
+        password: <input type="password" id="psw"><br>
+        <button id="login">login</button><br>
+    </body>
 </html>
